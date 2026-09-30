@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: padosi_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: padosi_pro
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d padosi_pro"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: padosi_mailpit
+    restart: unless-stopped
+    ports:
+      - "1025:1025"   # SMTP — app sends mail here
+      - "8025:8025"   # Web UI — view caught emails at http://localhost:8025
+    environment:
+      MP_MAX_MESSAGES: 500
+      MP_SMTP_AUTH_ACCEPT_ANY: true
+      MP_SMTP_AUTH_ALLOW_INSECURE: true
+
+  app:
+    build: .
+    container_name: padosi_app
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
+    env_file: .env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      SMTP_HOST: mailpit
+      SMTP_PORT: 1025
+    ports:
+      - "4000:4000"
+
+volumes:
+  postgres_data:
