@@ -171,7 +171,9 @@ export async function verifyOtp(
 
     setAuthCookies(reply, user.id);
 
-    return sendResponse(reply, 200, false, "Email verified. You are now logged in.", {
+    return sendResponse(reply, 200, false, 'Email verified. You are now logged in.', {
+      access_token: createUserAccessToken({ user_id: user.id }),
+      refresh_token: createUserRefreshToken({ user_id: user.id }),
       user: { id: user.id, email, name: user.name, phone: user.phone, address: user.address, business_name: user.business_name },
     });
   } catch (err) {
@@ -245,7 +247,9 @@ export async function login(
 
     setAuthCookies(reply, user.id);
 
-    return sendResponse(reply, 200, false, "Login successful.", {
+    return sendResponse(reply, 200, false, 'Login successful.', {
+      access_token: createUserAccessToken({ user_id: user.id }),
+      refresh_token: createUserRefreshToken({ user_id: user.id }),
       user: { id: user.id, email, name: user.name, phone: user.phone, address: user.address, business_name: user.business_name },
     });
   } catch (err) {

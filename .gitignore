@@ -1,1 +1,27 @@
+# Environment files
+*.env
+*.env.local
 backend/.env
+frontend/.env
+
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Build artifacts & caches
+dist/
+build/
+.expo/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Android / iOS generated files
+frontend/android/
+frontend/ios/
+
+# Operating system
+.DS_Store
+Thumbs.db
