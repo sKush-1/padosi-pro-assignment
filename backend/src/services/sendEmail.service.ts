@@ -1,10 +1,14 @@
 import { transporter } from "../utils/nodemailerTransporter.util";
 
-const FROM = process.env.EMAIL_FROM || '"Padosi Pro" <noreply@padosipro.local>';
-
 export async function sendOtpEmail(to: string, otp: string): Promise<void> {
+  const fromAddress =
+    process.env.EMAIL_FROM ||
+    (process.env.EMAIL_USER
+      ? `"Padosi Pro" <${process.env.EMAIL_USER}>`
+      : '"Padosi Pro" <support@bulkparser.com>');
+
   await transporter.sendMail({
-    from: FROM,
+    from: fromAddress,
     to,
     subject: "Your Padosi Pro Verification Code",
     html: `
