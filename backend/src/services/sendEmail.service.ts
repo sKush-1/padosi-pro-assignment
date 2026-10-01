@@ -1,11 +1,8 @@
 import { transporter } from "../utils/nodemailerTransporter.util";
 
 export async function sendOtpEmail(to: string, otp: string): Promise<void> {
-  const fromAddress =
-    process.env.EMAIL_FROM ||
-    (process.env.EMAIL_USER
-      ? `"Padosi Pro" <${process.env.EMAIL_USER}>`
-      : '"Padosi Pro" <support@bulkparser.com>');
+  const rawFrom = process.env.EMAIL_FROM || process.env.EMAIL_USER || "support@bulkparser.com";
+  const fromAddress = rawFrom.includes("<") ? rawFrom : `"Padosi Pro" <${rawFrom}>`;
 
   await transporter.sendMail({
     from: fromAddress,
