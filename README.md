@@ -3,7 +3,7 @@
 A local home services platform inspired by [app.padosipro.com](https://app.padosipro.com).
 Comprises a high-performance **Fastify + PostgreSQL backend** and a **React Native (Expo) mobile frontend**.
 
-> 📲 **Latest Android APK**: [Download & Install Build (EAS)](https://expo.dev/accounts/skush-1/projects/Padosipro/builds/2e6f7a0f-30a9-41da-a92b-7930dd2aa3b1)
+> 📲 **Latest Android APK**: [Direct APK Download](https://expo.dev/artifacts/eas/plPH18emov6yPg4Ju2lnCfto6tU55BpKkER9QDa6SqQ.apk) · [EAS Build Details](https://expo.dev/accounts/skush-1/projects/Padosipro/builds/212e49ef-1682-4972-bf73-9b382bfe4d4b)
 
 ---
 
@@ -46,7 +46,6 @@ docker compose up -d --build
 | Service | URL / Port | Description |
 | :--- | :--- | :--- |
 | **API Server** | `http://localhost:4000` | Node.js + Fastify REST endpoints |
-| **Mailpit Web UI** | `http://localhost:8025` | Local email catcher (view sent OTPs in your browser) |
 | **PostgreSQL 18** | `localhost:5432` | Primary database with automatic migrations & 25 seeded tasks |
 
 To run migrations manually (outside docker):
@@ -150,7 +149,7 @@ Sample test output:
 ## 📦 How to Build the Android APK
 
 > 🚀 **Pre-built APK Available**: You can download and install the latest Android APK directly without compiling locally:  
-> 🔗 **[EAS Build #2e6f7a0f](https://expo.dev/accounts/skush-1/projects/Padosipro/builds/2e6f7a0f-30a9-41da-a92b-7930dd2aa3b1)**
+> 📥 **[Direct APK Download](https://expo.dev/artifacts/eas/plPH18emov6yPg4Ju2lnCfto6tU55BpKkER9QDa6SqQ.apk)** · [EAS Build #212e49ef](https://expo.dev/accounts/skush-1/projects/Padosipro/builds/212e49ef-1682-4972-bf73-9b382bfe4d4b)
 
 There are two primary ways to produce an installable standalone Android `.apk`:
 
