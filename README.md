@@ -160,14 +160,26 @@ EAS Build creates the standalone APK in the cloud without needing local Android 
    ```bash
    eas login
    ```
-3. Initialize and trigger build:
+3. Verify `eas.json` has `buildType: "apk"` configured under `preview`:
+   ```json
+   "preview": {
+     "distribution": "internal",
+     "android": {
+       "buildType": "apk"
+     },
+     "env": {
+       "EXPO_PUBLIC_API_URL": "https://your-public-tunnel.trycloudflare.com/api/v1"
+     }
+   }
+   ```
+   > **Note**: `buildType: "apk"` ensures EAS compiles an installable `.apk` file (which can be sideloaded directly onto any Android device) rather than a Google Play `.aab` bundle. Make sure `EXPO_PUBLIC_API_URL` points to your public tunnel (e.g. Cloudflare Tunnel, Ngrok) or your LAN IP (`http://192.168.x.x:4000/api/v1`), not `localhost`.
+
+4. Trigger the build:
    ```bash
    cd frontend
-   eas build:configure
-   # Select Android -> Creates eas.json with preview profile for APK
    eas build -p android --profile preview
    ```
-   *EAS will return a direct download link for the completed `.apk` file.*
+   *EAS will return a direct download link and QR code for the completed `.apk` file.*
 
 ---
 
