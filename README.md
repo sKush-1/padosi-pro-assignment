@@ -3,6 +3,8 @@
 A local home services platform inspired by [app.padosipro.com](https://app.padosipro.com).
 Comprises a high-performance **Fastify + PostgreSQL backend** and a **React Native (Expo) mobile frontend**.
 
+> 📲 **Latest Android APK**: [Download & Install Build (EAS)](https://expo.dev/accounts/skush-1/projects/Padosipro/builds/2e6f7a0f-30a9-41da-a92b-7930dd2aa3b1)
+
 ---
 
 ## 📑 Table of Contents
@@ -146,6 +148,9 @@ Sample test output:
 ---
 
 ## 📦 How to Build the Android APK
+
+> 🚀 **Pre-built APK Available**: You can download and install the latest Android APK directly without compiling locally:  
+> 🔗 **[EAS Build #2e6f7a0f](https://expo.dev/accounts/skush-1/projects/Padosipro/builds/2e6f7a0f-30a9-41da-a92b-7930dd2aa3b1)**
 
 There are two primary ways to produce an installable standalone Android `.apk`:
 
