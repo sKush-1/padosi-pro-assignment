@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import type { MigrationBuilder } from "node-pg-migrate";
+type MigrationBuilder = any;
 
 export async function up(pgm: MigrationBuilder): Promise<void> {
   pgm.createTable("users", {

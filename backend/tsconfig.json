@@ -14,7 +14,6 @@
   "include": ["src/**/*"],
   "exclude": [
     "node_modules",
-    "dist",
-    "src/config/database/migrations"
+    "dist"
   ]
 }
