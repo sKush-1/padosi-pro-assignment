@@ -64,28 +64,23 @@ The project uses `.env.example` in `backend/` with sensible local defaults:
 PORT=4000
 NODE_ENV=development
 
-# Database (PostgreSQL)
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=postgres
-DB_NAME=padosi_pro
-DB_SSL=false
+# Database (Neon PostgreSQL)
+DATABASE_URL=postgresql://user:password@host/db?sslmode=require
+DB_SSL=true
 
 # Authentication Secrets
-JWT_ACCESS_TOKEN_SECRET_KEY=dev_access_secret_key_at_least_32_characters_long
-JWT_REFRESH_TOKEN_SECRET_KEY=dev_refresh_secret_key_at_least_32_characters_long
+JWT_ACCESS_TOKEN_SECRET_KEY=at_least_32_chars_secret
+JWT_REFRESH_TOKEN_SECRET_KEY=at_least_32_chars_secret
 JWT_ACCESSTOKEN_EXPIRY=15m
 JWT_REFRESHTOKEN_EXPIRY=7d
-COOKIE_SECRET=dev_cookie_secret_at_least_32_chars
+COOKIE_SECRET=at_least_32_chars_secret
 
-# Mailer (Mailpit local mail catcher)
-SMTP_HOST=localhost
-SMTP_PORT=1025
-EMAIL_FROM="Padosi Pro" <noreply@padosipro.local>
+# Hostinger Mail REST API
+HOSTINGER_MAILBOX_ID=your_mailbox_id
+HOSTINGER_API_TOKEN=your_api_token
 ```
 
-> **Email Catcher**: By default, Mailpit intercepts all outgoing SMTP messages. Visit **`http://localhost:8025`** to see verification codes. No external email provider is required for development.
+> **Email**: OTPs are sent via the [Hostinger Mail REST API](https://api.mail.hostinger.com) over HTTPS — no SMTP port issues on any cloud platform.
 
 ---
 
@@ -164,7 +159,7 @@ EAS Build creates the standalone APK in the cloud without needing local Android 
    ```bash
    eas login
    ```
-3. Verify `eas.json` has `buildType: "apk"` configured under `preview`:
+3. Verify `eas.json` has `buildType: "apk"` and the production API URL:
    ```json
    "preview": {
      "distribution": "internal",
@@ -172,11 +167,12 @@ EAS Build creates the standalone APK in the cloud without needing local Android 
        "buildType": "apk"
      },
      "env": {
-       "EXPO_PUBLIC_API_URL": "https://your-public-tunnel.trycloudflare.com/api/v1"
+       "EXPO_PUBLIC_API_URL": "https://padosi-pro-assignment.onrender.com/api/v1"
      }
    }
    ```
-   > **Note**: `buildType: "apk"` ensures EAS compiles an installable `.apk` file (which can be sideloaded directly onto any Android device) rather than a Google Play `.aab` bundle. Make sure `EXPO_PUBLIC_API_URL` points to your public tunnel (e.g. Cloudflare Tunnel, Ngrok) or your LAN IP (`http://192.168.x.x:4000/api/v1`), not `localhost`.
+   > **Note**: `buildType: "apk"` ensures EAS compiles an installable `.apk` (sideloadable on any Android device) rather than a Google Play `.aab`. The `EXPO_PUBLIC_API_URL` is baked into the APK at build time and points to the live Render backend.
+
 
 4. Trigger the build:
    ```bash
