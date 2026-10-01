@@ -38,9 +38,41 @@ connectDB();
 const start = async () => {
   try {
     await server.register(cors, {
-      origin: process.env.CORS || "http://localhost:3000",
+      origin: (origin, cb) => {
+        // 1. Allow native mobile apps (Android/iOS fetch), Postman, cURL (no Origin header)
+        if (!origin) {
+          return cb(null, true);
+        }
+
+        // 2. Configured origins (web, dev servers, tunnels)
+        const allowedOrigins = [
+          "http://localhost:3000",
+          "http://localhost:8081", // Expo Web / Metro default port
+          "http://localhost:19006",
+          process.env.CORS,
+          process.env.CORS_ORIGIN,
+        ].filter(Boolean);
+
+        // 3. Allow matching origins, local IPs (Android emulator/LAN), or dev tunnels
+        const isAllowed =
+          allowedOrigins.includes(origin) ||
+          origin.includes("localhost") ||
+          origin.startsWith("http://127.0.0.1") ||
+          origin.startsWith("http://10.0.2.2") ||
+          origin.startsWith("http://192.168.") ||
+          origin.endsWith(".trycloudflare.com") ||
+          origin.endsWith(".ngrok-free.app") ||
+          origin.endsWith(".ngrok.io");
+
+        if (isAllowed) {
+          cb(null, true);
+        } else {
+          cb(null, false);
+        }
+      },
       credentials: true,
       methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
     });
 
     await server.register(fastifyCookie, {
